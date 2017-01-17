@@ -1,0 +1,22 @@
+
+config openvpn 'server'
+	option enabled '1'
+	option verb '3'
+	option port '1194'
+	option proto 'udp'
+	option dev 'tun'
+	option dev 'tun0'
+	option topology 'subnet'
+	option server '192.168.3.0 255.255.255.0'
+	option keepalive '10 120'
+	option ca '/etc/openvpn/keys/ca.crt'
+	option cert '/etc/openvpn/keys/SRV-01.crt'
+	option key '/etc/openvpn/keys/SRV-01.key'
+	option dh '/etc/openvpn/keys/dh1024.pem'
+	option cipher AES-256-CBC
+	option auth 'SHA512'
+	option comp_lzo 'yes'
+	option user 'nobody'
+	option group 'nogroup'
+
+#Source https://wiki.openwrt.org/doc/howto/openvpn-streamlined-server-setup
