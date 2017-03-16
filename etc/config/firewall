@@ -3,28 +3,61 @@ config defaults
 	option syn_flood '1'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
-	option forward 'ACCEPT'
+	option forward 'REJECT'
+	option disable_ipv6 '1'
 	option drop_invalid '1'
 
 config zone
-	option name 'eth0'
-	option network 'eth0'
+	option name 'vpn'
+	list network 'vpn0'
 	option input 'ACCEPT'
-	option forward 'ACCEPT'
 	option output 'ACCEPT'
+	option forward 'REJECT'
 
 config zone
-	option name 'vpn0'
-	option network 'vpn0'
+	option name 'lan'
+	list network 'lan'
 	option input 'ACCEPT'
-	option forward 'ACCEPT'
 	option output 'ACCEPT'
-	option masq '1'
+	option forward 'ACCEPT'
 
-config forwarding
-	option src 'eth0'
-	option dest 'vpn0'
-	option family 'ipv4'
+config zone
+	option name 'wan'
+	list network 'wan'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option masq '1'
+	option mtu_fix '1'
 
 config include
 	option path '/etc/firewall.user'
+
+config rule
+	option src 'wan'
+	option proto 'udp'
+	option dest_port '1194'
+	option name 'Open1194'
+	option target 'ACCEPT'
+
+config forwarding
+	option dest 'vpn'
+	option src 'lan'
+
+config forwarding
+	option dest 'wan'
+	option src 'lan'
+
+config forwarding
+	option dest 'lan'
+	option src 'vpn'
+
+config rule
+	option enabled '1'
+	option proto 'tcp udp'
+	option name 'NO FORWARD Netbios'
+	option src 'lan'
+	option dest 'wan'
+	option dest_port '137-139'
+	option target 'DROP'
+
