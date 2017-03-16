@@ -20,10 +20,10 @@ config interface 'lan'
 config interface 'wan'
 	option ifname 'eth0.1'
 	option proto 'static'
-	option ipaddr '91.223.246.172'
+	option ipaddr 'xxx.xxx.xxx.xxx'
 	option netmask '255.255.255.128'
-	option gateway '91.223.246.129'
-	option nameserver '91.223.246.4'
+	option gateway 'xxx.xxx.xxx.xxx'
+	option nameserver 'xxx.xxx.xxx.xxx'
 	option delegate '0'
 
 config switch
